@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  postgres:
+    container_name: postgres_container
+    image: postgres:15.2-alpine
+    environment:
+      POSTGRES_DB: "storeDb"
+      POSTGRES_USER: "ShevchenkoDN"
+      POSTGRES_PASSWORD: "She031fit"
+    ports:
+      - "5433:5432"
+    volumes:
+      - db:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL","pg_isready -U ShevchenkoDN -d storeDb" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 3G
+volumes:
+  db:
+    driver: local
