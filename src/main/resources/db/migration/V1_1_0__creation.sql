@@ -45,3 +45,13 @@ create table subscriptions
     foreign key (following_id) references users (id),
     primary key (id)
 );
+create table chat_requests
+(
+    id          bigserial not null unique,
+    sender_id   bigserial not null,
+    receiver_id bigserial not null,
+    status      text,
+    foreign key (sender_id) references users (id),
+    foreign key (receiver_id) references users (id),
+    primary key (id)
+);

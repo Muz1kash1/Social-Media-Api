@@ -10,29 +10,22 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
-@Getter
-@Setter
+@Table(name = "chat_requests")
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "posts")
-public class Post {
+@Getter
+@Setter
+public class ChatRequests {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
   private long id;
-  @Column(name = "user_id")
-  private long userId;
-  @Column(name = "title")
-  private String title;
-  @Column(name = "text")
-  private String text;
-  @Column(name = "created_at")
-  private LocalDateTime createdAt;
-  @Column(name = "pictures")
-  private List<String> pictures;
-
+  @Column(name = "sender_id")
+  private long senderId;
+  @Column(name = "receiver_id")
+  private long receiverId;
+  @Column(name = "status")
+  private String status;
 }
