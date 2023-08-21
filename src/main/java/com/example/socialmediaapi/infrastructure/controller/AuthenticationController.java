@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,11 +21,11 @@ public class AuthenticationController {
   private final TokenService tokenService;
   private final UserService userService;
 
-  @PostMapping(value = "/signin")
+  @GetMapping(value = "/signin")
   public ResponseEntity<String> userLogin(Authentication authentication){
-    log.info("token generated for '{}'",authentication.getName());
+//    log.info("token generated for '{}'",authentication.getName());
     String token = tokenService.generateToken(authentication);
-    log.info("token granted {}", token);
+//    log.info("token granted {}", token);
     return ResponseEntity.ok().body(token);
   }
   @PostMapping(value = "/signup")
