@@ -6,16 +6,15 @@ import com.example.socialmediaapi.model.domain.User;
 import com.example.socialmediaapi.model.dto.UserDto;
 import com.example.socialmediaapi.model.dto.UserSignupDto;
 import lombok.AllArgsConstructor;
-import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
 public class UserService {
   private final IUserRepo userRepo;
+  private final UserMapper userMapper;
 
   public UserDto createUser(final UserSignupDto userSignupDto) {
-    UserMapper userMapper = Mappers.getMapper(UserMapper.class);
     User user = userRepo.createUser(userSignupDto);
     return
       userMapper.userToUserDto(user);

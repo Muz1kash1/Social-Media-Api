@@ -4,4 +4,5 @@ import com.example.socialmediaapi.infrastructure.repositories.entity.postgres.Su
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SubscriptionRepository extends JpaRepository<Subscription,Long> {
+  Subscription findTopByOrderByIdDesc();
 }

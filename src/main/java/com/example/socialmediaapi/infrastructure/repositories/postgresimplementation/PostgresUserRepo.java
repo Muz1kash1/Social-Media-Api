@@ -5,32 +5,31 @@ import com.example.socialmediaapi.infrastructure.repositories.IUserRepo;
 import com.example.socialmediaapi.infrastructure.repositories.jparepositories.postgres.UserRepository;
 import com.example.socialmediaapi.model.domain.User;
 import com.example.socialmediaapi.model.dto.UserSignupDto;
+import lombok.AllArgsConstructor;
 import org.mapstruct.factory.Mappers;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@AllArgsConstructor
 @ComponentScan("com.example.socialmediaapi.infrastructure.repositories.entity.postgres")
 public class PostgresUserRepo implements IUserRepo {
   private final PasswordEncoder passwordEncoder;
   private final UserRepository userRepository;
-
-  public PostgresUserRepo(PasswordEncoder passwordEncoder, UserRepository userRepository) {
-    this.passwordEncoder = passwordEncoder;
-    this.userRepository = userRepository;
-  }
+  private final UserMapper userMapper;
 
   @Override public User createUser(final UserSignupDto userSignupDto) {
-    UserMapper userMapper = Mappers.getMapper(UserMapper.class);
-    com.example.socialmediaapi.infrastructure.repositories.entity.postgres.User user =
-      new com.example.socialmediaapi.infrastructure.repositories.entity.postgres.User(
+    User user =
+      new User(
         1L,
         userSignupDto.getUsername(),
         userSignupDto.getMail(),
         passwordEncoder.encode(userSignupDto.getPassword())
       );
-    userRepository.save(user);
+
+    userRepository.save(userMapper.userToUserEntity(user));
+
     com.example.socialmediaapi.infrastructure.repositories.entity.postgres.User userToReturn =
       userRepository
         .findUserByUsername(user.getUsername())
@@ -38,6 +37,6 @@ public class PostgresUserRepo implements IUserRepo {
           () -> new RuntimeException("Пользователя " + user.getUsername() + " нет в базе")
         );
     return
-      userMapper.userEntityToUser(user);
+      userMapper.userEntityToUser(userToReturn);
   }
 }
