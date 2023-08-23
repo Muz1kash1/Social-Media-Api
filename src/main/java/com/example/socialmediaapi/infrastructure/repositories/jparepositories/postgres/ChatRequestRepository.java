@@ -4,4 +4,5 @@ import com.example.socialmediaapi.infrastructure.repositories.entity.postgres.Ch
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ChatRequestRepository extends JpaRepository<ChatRequest, Long> {
+  ChatRequest findTopByOrderByIdDesc();
 }

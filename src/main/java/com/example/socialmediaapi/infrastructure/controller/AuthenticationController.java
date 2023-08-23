@@ -23,9 +23,7 @@ public class AuthenticationController {
 
   @GetMapping(value = "/signin")
   public ResponseEntity<String> userLogin(Authentication authentication) {
-//    log.info("token generated for '{}'",authentication.getName());
     String token = tokenService.generateToken(authentication);
-//    log.info("token granted {}", token);
     return ResponseEntity.ok().body(token);
   }
 

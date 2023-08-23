@@ -1,10 +1,12 @@
 package com.example.socialmediaapi.infrastructure.service;
 
+import com.example.socialmediaapi.infrastructure.mappers.ChatRequestMapper;
 import com.example.socialmediaapi.infrastructure.mappers.FriendRequestMapper;
 import com.example.socialmediaapi.infrastructure.repositories.IFriendRequestsRepo;
 import com.example.socialmediaapi.infrastructure.repositories.IFriendsRepo;
 import com.example.socialmediaapi.infrastructure.repositories.ISubscriptionRepo;
 import com.example.socialmediaapi.infrastructure.repositories.IUserRepo;
+import com.example.socialmediaapi.model.domain.ChatRequest;
 import com.example.socialmediaapi.model.domain.FriendRequest;
 import com.example.socialmediaapi.model.dto.ChatRequestDto;
 import com.example.socialmediaapi.model.dto.FriendRequestDto;
@@ -19,8 +21,9 @@ public class FriendsService {
   private final IFriendRequestsRepo friendRequestsRepo;
   private final ISubscriptionRepo subscriptionRepo;
   private final IUserRepo userRepo;
-  private final FriendRequestMapper friendRequestMapper;
   private final IFriendsRepo friendsRepo;
+  private final FriendRequestMapper friendRequestMapper;
+  private final ChatRequestMapper chatRequestMapper;
 
   @Transactional
   public FriendRequestDto sendFriendRequest(final long receiverId, final String name) {
@@ -58,7 +61,7 @@ public class FriendsService {
   }
 
   public ChatRequestDto sendChatRequest(final long receiverId, final String name) throws AccessDeniedException {
-    friendsRepo.sendChatRequest(receiverId, name);
-    return null;
+    ChatRequest chatRequest = friendsRepo.sendChatRequest(receiverId, name);
+    return chatRequestMapper.chatRequestToChatRequestDto(chatRequest);
   }
 }

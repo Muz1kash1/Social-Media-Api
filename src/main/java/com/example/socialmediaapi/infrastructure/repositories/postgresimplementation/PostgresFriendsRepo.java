@@ -45,7 +45,7 @@ public class PostgresFriendsRepo implements IFriendsRepo {
     }
   }
 
-  @Override public void sendChatRequest(final long receiverId, final String name) throws AccessDeniedException {
+  @Override public ChatRequest sendChatRequest(final long receiverId, final String name) throws AccessDeniedException {
     User user = userRepository
       .findUserByUsername(name)
       .orElseThrow(() -> new UsernameNotFoundException("Пользователя с именем " + name + " не существует"));
@@ -60,5 +60,8 @@ public class PostgresFriendsRepo implements IFriendsRepo {
       throw new AccessDeniedException(
         "Пользователь с именем " + name + " не является другом пользователя с id " + receiverId);
     }
+    com.example.socialmediaapi.infrastructure.repositories.entity.postgres.ChatRequest chatRequest
+      = chatRequestRepository.findTopByOrderByIdDesc();
+    return chatRequestMapper.chatRequestEntityToChatRequest(chatRequest);
   }
 }
