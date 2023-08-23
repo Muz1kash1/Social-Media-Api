@@ -4,4 +4,5 @@ import com.example.socialmediaapi.infrastructure.repositories.entity.postgres.Fr
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface FriendRequestRepository extends JpaRepository<FriendRequest, Long> {
+  FriendRequest findTopByOrderByIdDesc();
 }

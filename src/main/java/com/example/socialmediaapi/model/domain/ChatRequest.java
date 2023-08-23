@@ -6,10 +6,10 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-@AllArgsConstructor
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
-public class FriendRequest {
+public class ChatRequest {
   @NotNull
   private long id;
   @NotNull

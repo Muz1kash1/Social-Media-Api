@@ -5,4 +5,5 @@ import com.example.socialmediaapi.model.dto.UserSignupDto;
 
 public interface IUserRepo {
   User createUser(UserSignupDto userSignupDto);
+  User getUserById(long userId);
 }

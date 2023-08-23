@@ -8,7 +8,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class PostCreationDto {
-  private final long userId;
   private final String title;
   private final String text;
   private final LocalDateTime createdAt;

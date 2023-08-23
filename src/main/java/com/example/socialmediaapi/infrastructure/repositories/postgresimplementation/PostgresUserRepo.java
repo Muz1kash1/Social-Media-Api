@@ -6,23 +6,21 @@ import com.example.socialmediaapi.infrastructure.repositories.jparepositories.po
 import com.example.socialmediaapi.model.domain.User;
 import com.example.socialmediaapi.model.dto.UserSignupDto;
 import lombok.AllArgsConstructor;
-import org.mapstruct.factory.Mappers;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 @Repository
 @AllArgsConstructor
-@ComponentScan("com.example.socialmediaapi.infrastructure.repositories.entity.postgres")
 public class PostgresUserRepo implements IUserRepo {
   private final PasswordEncoder passwordEncoder;
   private final UserRepository userRepository;
   private final UserMapper userMapper;
 
-  @Override public User createUser(final UserSignupDto userSignupDto) {
+  @Override
+  public User createUser(final UserSignupDto userSignupDto) {
     User user =
       new User(
-        1L,
+        0L,
         userSignupDto.getUsername(),
         userSignupDto.getMail(),
         passwordEncoder.encode(userSignupDto.getPassword())
@@ -38,5 +36,11 @@ public class PostgresUserRepo implements IUserRepo {
         );
     return
       userMapper.userEntityToUser(userToReturn);
+  }
+  @Override
+  public User getUserById(final long userId) {
+    com.example.socialmediaapi.infrastructure.repositories.entity.postgres.User user = userRepository.getReferenceById(
+      userId);
+    return userMapper.userEntityToUser(user);
   }
 }

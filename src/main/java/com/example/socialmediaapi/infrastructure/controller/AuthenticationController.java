@@ -22,14 +22,15 @@ public class AuthenticationController {
   private final UserService userService;
 
   @GetMapping(value = "/signin")
-  public ResponseEntity<String> userLogin(Authentication authentication){
+  public ResponseEntity<String> userLogin(Authentication authentication) {
 //    log.info("token generated for '{}'",authentication.getName());
     String token = tokenService.generateToken(authentication);
 //    log.info("token granted {}", token);
     return ResponseEntity.ok().body(token);
   }
+
   @PostMapping(value = "/signup")
-  public ResponseEntity<UserDto> userSignup(@RequestBody UserSignupDto userSignupDto){
+  public ResponseEntity<UserDto> userSignup(@RequestBody UserSignupDto userSignupDto) {
     UserDto userDto = userService.createUser(userSignupDto);
     return ResponseEntity.created(URI.create("/users/" + userDto.getId())).body(userDto);
   }
